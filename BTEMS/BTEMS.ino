@@ -2,50 +2,49 @@
 // Filename: BTEMS.ino
 //
 // Authors: Elizabeth Prucka
-//	    Nipun Gunawardena
+//      Nipun Gunawardena
 //
 // Notes:
-//	 Tested on Arduino Mini Pro 3.3V
+//   Tested on Arduino Mini Pro 3.3V
 // ------------------------------------------------------------------------------------------------
 
 
 
 
 // Includes ---------------------------------------------------------------------------------------
-#include <Narcoleptic.h>	// Sleep Library
-#include <SD.h> 		// SD card
-#include <SPI.h> 		// SPI Library
-#include <SHT2x.h>		// SHT21 Library
-#include <Wire.h>		// I2C Library
+#include <Narcoleptic.h>  // Sleep Library
+#include <SD.h>           // SD card
+#include <SPI.h>          // SPI Library
+#include <SHT2x.h>        // SHT21 Library
+#include <Wire.h>         // I2C Library
 #include <Adafruit_MLX90614.h>  // Infrared Temp Library
+#include <RTClib.h> //RTC Library
 
 
 
 
-// Includes ---------------------------------------------------------------------------------------
-#define DEBUG 1
-
-
+// Defining ---------------------------------------------------------------------------------------
+#define DEBUG 1 //Used to Show Serial Monitor during Debugging
 
 
 // Initializations --------------------------------------------------------------------------------
-// @prucka Comment code descriptively
-float mlxIR;		//
-float mlxAmb;
-float shtAmb;
-float shtHum;
-float mSecs;
-int chipSelect = 4; 				// chipSelect pin for the SD card Reader
-File logfile; 					// Data object you will write your sensor data to
+float mlxIR;    // IR values from MLX90614
+float mlxAmb;   // Ambient temp values from MLX90614
+float shtAmb;   // Ambient temp values from SHT21
+float shtHum;   // Relative humidity values from SHT21
+float mSecs;    // Milliseconds from Arduino
+int chipSelect = 4;         // chipSelect pin for the SD card Reader
+File logfile;               // Data object you will write your sensor data to
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
-char filename[] = "BXX_00.CSV";			// Prototype filename
+RTC_DS1307 RTC;
+char filename[] = "BXX_00.CSV";     // Prototype filename
 
 
 
 
 // Function Prototypes ----------------------------------------------------------------------------
 void error(char *str);          // Error function prototype
-
+// @prucka make a blink green led and blink red led function void blinkGreenLED(unsigned long m)
 
 
 
@@ -58,12 +57,15 @@ void setup() {
   // Initialize libraries
   Wire.begin();
   mlx.begin();
+  RTC.begin();
 
   // Initialize SD Card
-  pinMode(10, OUTPUT); 	// Must declare 10 an output and reserve it
-  SD.begin(chipSelect); 		//Initialize the SD card reader
+  SD.begin(chipSelect);     //Initialize the SD card reader
 
-  // @prucka Blink LED via pins instead of current method. Initialize LEDs here
+  //Declare Pins for LED
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+
 
   // Create filename, open SD Card File
   for (uint8_t i = 0; i < 100; i++) {            // Indexes file every time program is restarted
@@ -76,13 +78,30 @@ void setup() {
   }
 
   // Prepare file
-  if (!logfile) {								// File successfully opened check
+  if (!logfile) {               // File successfully opened check
     error("Couldnt create file!");
   }
-  logfile.println("Millis, SHT_Amb, SHT_Hum, MLX_IR, MLX_Amb");
-  logfile.flush();
+  logfile.println("Year, Month, Day, Hour, Minute, Second, Millis, SHT_Amb, SHT_Hum, MLX_IR, MLX_Amb"); //List order of data on SD Card
+  logfile.flush();                                                                                       //Save file
 
-  // @prucka Turn on LED for 2 seconds and then turn off here
+  // Check if the RTC is running.
+  if (! RTC.isrunning()) {
+    Serial.println("RTC is NOT running");
+    error("RTC is NOT running");
+  }
+
+  // Gets current datetime and compares it to compilation time
+  DateTime now = RTC.now();
+  DateTime compiled = DateTime(__DATE__, __TIME__);
+  if (now.unixtime() < compiled.unixtime()) {
+    Serial.println("RTC is older than compile time! Updating");
+    RTC.adjust(DateTime(__DATE__, __TIME__));
+    // @prucka blink red led here
+  }
+
+  digitalWrite(10, HIGH);       //Light Green LED for 2 seconds
+  delay(2000);
+  digitalWrite(10, LOW);
 }
 
 
@@ -94,26 +113,56 @@ void loop() {
   // Gather measurements
   mSecs = millis();
   shtAmb = SHT2x.GetTemperature();
-  // @prucka add mlx ambient read
+  mlxAmb = mlx.readAmbientTempC();
   mlxIR = mlx.readObjectTempC();
-  shtHum = SHT2x.GetshtHum();
+  shtHum = SHT2x.GetHumidity();
+
+  // Get the current time
+  DateTime now = RTC.now();
 
 
-  // Write to file
-  if (logfile) {
+  // Write to Serial Monitor
 #if DEBUG
-    Serial.print("Time Elapsed: ");
-    Serial.println(mSecs);
-    Serial.print("SHT21 Ambient Temp: "); //Print results
-    Serial.println(shtAmb);
-    Serial.print("SHT21 Humidity");
-    Serial.println(shtHum);
-    Serial.print("MLX90614 Object Temp: ");
-    Serial.println(mlxIR);
-    Serial.println();
+  Serial.print("Time Elapsed: ");
+  Serial.println(mSecs);
+  Serial.print("SHT21 Ambient Temp: "); //Print results
+  Serial.println(shtAmb);
+  Serial.print("SHT21 Humidity");
+  Serial.println(shtHum);
+  Serial.print("MLX90614 Object Temp: ");
+  Serial.println(mlxIR);
+  Serial.print("MLX90614 Ambient Temp: ");
+  Serial.println(mlxAmb);
+  Serial.println();
+  Serial.print("Current time: ");
+  Serial.print(now.year(), DEC);
+  Serial.print('/');
+  Serial.print(now.month(), DEC);
+  Serial.print('/');
+  Serial.print(now.day(), DEC);
+  Serial.print(' ');
+  Serial.print(now.hour(), DEC);
+  Serial.print(':');
+  Serial.print(now.minute(), DEC);
+  Serial.print(':');
+  Serial.print(now.second(), DEC);
+  Serial.println();
 #endif
+  if (logfile) {
 
     // Write to file
+    logfile.print(now.year(), DEC);
+    logfile.print(", ");
+    logfile.print(now.month(), DEC);
+    logfile.print(", ");
+    logfile.print(now.day(), DEC);
+    logfile.print(", ");
+    logfile.print(now.hour(), DEC);
+    logfile.print(", ");
+    logfile.print(now.minute(), DEC);
+    logfile.print(", ");
+    logfile.print(now.second(), DEC);
+    logfile.print(", ");
     logfile.print(mSecs);
     logfile.print(", ");
     logfile.print(shtAmb);
@@ -122,11 +171,14 @@ void loop() {
     logfile.print(", ");
     logfile.print(mlxIR);
     logfile.print(", ");
-    // @prucka print mlxAmb to SD card
+    logfile.print(mlxAmb);
     logfile.println();
-    logfile.flush();                                  //close the file
+    logfile.flush();                                  //Save file
 
-    // @prucka Blink green LED for 150 ms.
+    //Blink Green LED
+    digitalWrite(10, HIGH); // @prucka change 10 to a variable greenPin
+    delay(200);
+    digitalWrite(10, LOW);
 
     // Sleep
     Narcoleptic.delay(9522);
@@ -136,9 +188,12 @@ void loop() {
 
 
 
-// Functions --------------------------------------------------------------------------------------
-void error(char *str) {			                        	// Used when initializing SD card...
-  // @prucka Modify to turn on (but not turn off) red LED
+//Error Function --------------------------------------------------------------------------------------
+void error(char *str) {                               // Used when initializing SD card...
+  //Turns on red LED
+  digitalWrite(10, HIGH); // @prucka setup red led and change to red led variable redPin
+
+  //Print Error to Serial Monitor
   Serial.print("Error: ");
   Serial.println(str);
   while (1);
