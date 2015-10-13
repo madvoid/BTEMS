@@ -44,7 +44,8 @@ char filename[] = "BXX_00.CSV";     // Prototype filename
 
 // Function Prototypes ----------------------------------------------------------------------------
 void error(char *str);          // Error function prototype
-// @prucka make a blink green led and blink red led function void blinkGreenLED(unsigned long m)
+void blinkGreenLED(unsigned long m);    //Blinking Green LED function
+void blinkRedLED(unsigned long m);    //Blinking Red LED function
 
 
 
@@ -64,7 +65,7 @@ void setup() {
 
   //Declare Pins for LED
   pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
+  pinMode(9, OUTPUT);
 
 
   // Create filename, open SD Card File
@@ -96,12 +97,10 @@ void setup() {
   if (now.unixtime() < compiled.unixtime()) {
     Serial.println("RTC is older than compile time! Updating");
     RTC.adjust(DateTime(__DATE__, __TIME__));
-    // @prucka blink red led here
+    blinkRedLED(1000);
   }
 
-  digitalWrite(10, HIGH);       //Light Green LED for 2 seconds
-  delay(2000);
-  digitalWrite(10, LOW);
+  blinkGreenLED(2000);      //Blink Green LED for 2 seconds
 }
 
 
@@ -176,22 +175,33 @@ void loop() {
     logfile.flush();                                  //Save file
 
     //Blink Green LED
-    digitalWrite(10, HIGH); // @prucka change 10 to a variable greenPin
-    delay(200);
-    digitalWrite(10, LOW);
+    blinkGreenLED(200);
 
     // Sleep
     Narcoleptic.delay(9522);
   }
 }
 
+//Blink LED Functions --------------------------------------------------------------------------------
+void blinkGreenLED(unsigned long m) {     //Blinking the Green LED
+    //Blinks Green LED
+    digitalWrite(10, HIGH);
+    delay(m);
+    digitalWrite(10, LOW);
+}
 
+void blinkRedLED(unsigned long m) {     //Blinking the Red LED
+    //Blinks Red LED
+    digitalWrite(9, HIGH);
+    delay(m);
+    digitalWrite(9, LOW);
+}
 
 
 //Error Function --------------------------------------------------------------------------------------
 void error(char *str) {                               // Used when initializing SD card...
   //Turns on red LED
-  digitalWrite(10, HIGH); // @prucka setup red led and change to red led variable redPin
+  blinkRedLED(-1);
 
   //Print Error to Serial Monitor
   Serial.print("Error: ");
