@@ -5,15 +5,18 @@
 //          Elizabeth Prucka
 //
 // Notes:
-//   Tested on Arduino Mini Pro 3.3V
+//   - Tested on Arduino Mini Pro 3.3V
+//   - After uploading code, the user should wait until the program has fully started and taken a few
+//     readings before unplugging from the computer
+//   - Current delay in realtime is a little less than 10 seconds
 //
 // TODO:
 //   - Add support for 999 files
-//   - Add battery checking
-//   - Figure out fix for broken millis()?
 //
 // Current consumption values:
-// 
+//   - 3.60 to 3.80 mA during sleep
+//   - At least 12.5mA during write, assume 20mA-40mA during write
+//
 // ------------------------------------------------------------------------------------------------
 
 
@@ -33,9 +36,11 @@
 
 
 // Defining ---------------------------------------------------------------------------------------
-#define DEBUG 0           //Used to Show Serial Monitor during Debugging
-#define RED_LED_PIN 6
-#define GRN_LED_PIN 9
+#define DEBUG 0           // Used to Show Serial Monitor during Debugging
+#define RED_LED_PIN 6     // Pin used for red LED
+#define GRN_LED_PIN 9     // Pin used for green LED
+#define BAT_PIN A3        // Pin used to measure battery level
+#define CHIP_SELECT 4     // Chip select pin for SD card
 
 
 
@@ -46,7 +51,7 @@ float mlxAmb;               // Ambient temp values from MLX90614
 float shtAmb;               // Ambient temp values from SHT21
 float shtHum;               // Relative humidity values from SHT21
 float mSecs;                // Milliseconds from Arduino
-int chipSelect = 4;         // chipSelect pin for the SD card Reader
+int batLvl;                 // Battery reading from voltage divider
 File logfile;               // Data object you will write your sensor data to
 Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 RTC_DS3231 RTC;
@@ -75,7 +80,7 @@ void setup() {
   RTC.begin();
 
   // Initialize SD Card
-  SD.begin(chipSelect);     //Initialize the SD card reader
+  SD.begin(CHIP_SELECT);     //Initialize the SD card reader
 
   //Declare Pins for LED
   pinMode(RED_LED_PIN, OUTPUT);
@@ -95,19 +100,21 @@ void setup() {
   if (!logfile) {               // File successfully opened check
     error("Couldnt create file!");
   }
-  logfile.println("Year, Month, Day, Hour, Minute, Second, Millis, SHT_Amb, SHT_Hum, MLX_IR, MLX_Amb"); // Print header to SD
+  logfile.println("Year, Month, Day, Hour, Minute, Second, SHT_Amb_C, SHT_Hum_Pct, MLX_IR_C, MLX_Amb_C, Bat_Lvl_V"); // Print header to SD
   logfile.flush();             //Save file
 
   // Print header for debugging
 #if DEBUG
-  Serial.println("Year, Month, Day, Hour, Minute, Second, Millis, SHT_Amb, SHT_Hum, MLX_IR, MLX_Amb");
+  Serial.println("Year, Month, Day, Hour, Minute, Second, SHT_Amb_C, SHT_Hum_Pct, MLX_IR_C, MLX_Amb_C, Bat_Lvl_V");
 #endif
 
   // Check if the RTC is running.
-  if (! RTC.isrunning()) {
-    Serial.println("RTC is NOT running");
-    error("RTC is NOT running");
-  }
+  // TODO: Determine whether chunk is necessary
+  // Doesn't work when uncommented, why?
+//  if (! RTC.isrunning()) {
+//    Serial.println("RTC is NOT running");
+//    error("RTC is NOT running");
+//  }
 
   // Gets current datetime and compares it to compilation time
   DateTime now = RTC.now();
@@ -115,10 +122,14 @@ void setup() {
   if (now.unixtime() < compiled.unixtime()) {
     Serial.println("RTC is older than compile time! Updating");
     RTC.adjust(DateTime(__DATE__, __TIME__));
-    blinkRedLED(1000);
+    for (int i = 0; i < 3; i++) {
+      blinkRedLED(100);
+      blinkGreenLED(100);
+    }
   }
 
-  blinkGreenLED(2000);      //Blink Green LED for 2 seconds
+  delay(1000);              // Give user time to look at LED
+  blinkGreenLED(2000);      // Blink Green LED for 2 seconds
 }
 
 
@@ -128,11 +139,11 @@ void setup() {
 void loop() {
 
   // Gather measurements
-  mSecs = millis();
   shtAmb = SHT2x.GetTemperature();
   mlxAmb = mlx.readAmbientTempC();
   mlxIR = mlx.readObjectTempC();
   shtHum = SHT2x.GetHumidity();
+  batLvl = analogRead(BAT_PIN);
 
   // Get the current time
   DateTime now = RTC.now();
@@ -151,8 +162,6 @@ void loop() {
   Serial.print(", ");
   Serial.print(now.second(), DEC);
   Serial.print(", ");
-  Serial.print(mSecs);
-  Serial.print(", ");
   Serial.print(shtAmb);
   Serial.print(", ");
   Serial.print(shtHum);
@@ -160,6 +169,8 @@ void loop() {
   Serial.print(mlxIR);
   Serial.print(", ");
   Serial.print(mlxAmb);
+  Serial.print(", ");
+  Serial.print(batLvl);
   Serial.println();
   Serial.flush();
 #endif
@@ -178,8 +189,6 @@ void loop() {
     logfile.print(", ");
     logfile.print(now.second(), DEC);
     logfile.print(", ");
-    logfile.print(mSecs);
-    logfile.print(", ");
     logfile.print(shtAmb);
     logfile.print(", ");
     logfile.print(shtHum);
@@ -187,6 +196,8 @@ void loop() {
     logfile.print(mlxIR);
     logfile.print(", ");
     logfile.print(mlxAmb);
+    logfile.print(", ");
+    logfile.print(batLvl);
     logfile.println();
     logfile.flush();                                  //Save file
   }
@@ -195,7 +206,7 @@ void loop() {
   blinkGreenLED(200);
 
   // Delay/Sleep
-  Narcoleptic.delay(9500);
+  Narcoleptic.delay(8200);
   // delay(9421);
 }
 
