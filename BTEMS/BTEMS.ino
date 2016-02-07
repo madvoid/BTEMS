@@ -232,7 +232,7 @@ void blinkRedLED(unsigned long m) {
 
 
 //Error Function --------------------------------------------------------------------------------------
-void error(const char *str) {                               // Used when initializing SD card...
+void error(const char *str) {
   //Turns on red LED
   digitalWrite(RED_LED_PIN, HIGH);
 
