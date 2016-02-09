@@ -1,6 +1,7 @@
 %% Battery_Analysis.m
 % Nipun Gunawardena
 % Estimate battery life for BTEMS
+% TODO: Add sleepTime/wakeTime low and high?
 
 
 clear all, close all, clc
@@ -11,10 +12,10 @@ numBatsSeries = 4;      % Natural number
 numBatsParallel = 1;    % Natural number, don't use 0
 voltsPerBat = 1.5;      % V
 batCapacity = 2500;     % mAh
-sleepLow = 3.60;        % mA
-sleepHigh = 3.80;       % mA
-wakeLow = 12;           % mA
-wakeHigh = 40;          % mA
+sleepLow = 3.60;        % mA - Lowest reading measured while sleeping
+sleepHigh = 3.90;       % mA - Highest reading measured while sleeping
+wakeLow = 12;           % mA - Lowest reading measured while awake
+wakeHigh = 40;          % mA - Highest reading measured while awake
 sleepTime = 9.5;        % s
 wakeTime = 0.5;         % s
 

@@ -12,9 +12,10 @@
 //
 // TODO:
 //   - Add support for 999 files
+//   - Change green LED to blink during measurement, not after
 //
 // Current consumption values:
-//   - 3.60 to 3.80 mA during sleep
+//   - 3.60 to 3.90 mA during sleep
 //   - At least 12.5mA during write, assume 20mA-40mA during write
 //
 // ------------------------------------------------------------------------------------------------
@@ -40,7 +41,7 @@
 #define RED_LED_PIN 6     // Pin used for red LED
 #define GRN_LED_PIN 9     // Pin used for green LED
 #define BAT_PIN A3        // Pin used to measure battery level
-#define CHIP_SELECT 4     // Chip select pin for SD card
+#define CHIP_SELECT 10    // Chip select pin for SD card
 
 
 
@@ -51,10 +52,16 @@ float mlxAmb;               // Ambient temp values from MLX90614
 float shtAmb;               // Ambient temp values from SHT21
 float shtHum;               // Relative humidity values from SHT21
 float mSecs;                // Milliseconds from Arduino
-int batLvl;                 // Battery reading from voltage divider
+float batLvl;               // Battery voltage level
+unsigned int batRaw;        // Raw battery input
+
+const unsigned int R1 = 24000;   // High-side resistor for battery measuring voltage divider
+const unsigned int R2 = 30000;   // Low-side resistor for battery measuring voltage divider
+
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();  // MLX90614 Class
+RTC_DS3231 RTC;                               // RTC Class
+
 File logfile;               // Data object you will write your sensor data to
-Adafruit_MLX90614 mlx = Adafruit_MLX90614();
-RTC_DS3231 RTC;
 char filename[] = "BTM_00.CSV";     // Prototype filename
 
 
@@ -143,7 +150,13 @@ void loop() {
   mlxAmb = mlx.readAmbientTempC();
   mlxIR = mlx.readObjectTempC();
   shtHum = SHT2x.GetHumidity();
-  batLvl = analogRead(BAT_PIN);
+
+  batRaw = 0;
+  for(int i = 0; i < 3; i++){
+    batRaw += analogRead(BAT_PIN);    // Average battery readings, division happens below
+  }
+  
+  batLvl = ( ((float)batRaw)*(3.3/1024.0/3.0) * (float)(R1 + R2) ) / ((float)R2);
 
   // Get the current time
   DateTime now = RTC.now();
