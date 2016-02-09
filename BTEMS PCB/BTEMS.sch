@@ -7277,14 +7277,14 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <junction x="147.32" y="193.04"/>
 </segment>
 <segment>
-<pinref part="RTC_HEADER" gate="G$1" pin="6"/>
-<wire x1="132.08" y1="175.26" x2="139.7" y2="175.26" width="0.1524" layer="91"/>
-<label x="134.62" y="175.26" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="RTC_HEADER" gate="G$1" pin="1"/>
 <wire x1="132.08" y1="162.56" x2="139.7" y2="162.56" width="0.1524" layer="91"/>
 <label x="134.62" y="162.56" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="RTC_HEADER" gate="G$1" pin="5"/>
+<wire x1="132.08" y1="172.72" x2="139.7" y2="172.72" width="0.1524" layer="91"/>
+<label x="134.62" y="172.72" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D2" class="0">
@@ -7657,11 +7657,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <label x="134.62" y="127" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="RTC_HEADER" gate="G$1" pin="5"/>
-<wire x1="132.08" y1="172.72" x2="139.7" y2="172.72" width="0.1524" layer="91"/>
-<label x="134.62" y="172.72" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="RTC_HEADER" gate="G$1" pin="2"/>
 <wire x1="132.08" y1="165.1" x2="139.7" y2="165.1" width="0.1524" layer="91"/>
 <label x="134.62" y="165.1" size="1.778" layer="95"/>
@@ -7670,6 +7665,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="EXHEADER_A0-3" gate="G$1" pin="4"/>
 <wire x1="215.9" y1="132.08" x2="220.98" y2="132.08" width="0.1524" layer="91"/>
 <label x="215.9" y="132.08" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="RTC_HEADER" gate="G$1" pin="6"/>
+<wire x1="132.08" y1="175.26" x2="139.7" y2="175.26" width="0.1524" layer="91"/>
+<label x="134.62" y="175.26" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="BAT_IN" class="0">
