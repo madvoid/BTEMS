@@ -7193,19 +7193,9 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </net>
 <net name="RST" class="0">
 <segment>
-<pinref part="ARDUINO_D2-9" gate="G$1" pin="3"/>
-<wire x1="187.96" y1="172.72" x2="182.88" y2="172.72" width="0.1524" layer="91"/>
-<label x="182.88" y="172.72" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="ARDUINO_A0-3" gate="G$1" pin="3"/>
 <wire x1="215.9" y1="172.72" x2="220.98" y2="172.72" width="0.1524" layer="91"/>
 <label x="215.9" y="172.72" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="EXHEADER_D2-9" gate="G$1" pin="3"/>
-<wire x1="187.96" y1="134.62" x2="182.88" y2="134.62" width="0.1524" layer="91"/>
-<label x="182.88" y="134.62" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="EXHEADER_A0-3" gate="G$1" pin="3"/>
@@ -7332,11 +7322,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <wire x1="187.96" y1="124.46" x2="182.88" y2="124.46" width="0.1524" layer="91"/>
 <label x="182.88" y="124.46" size="1.778" layer="95"/>
 </segment>
-<segment>
-<pinref part="SDSLOT" gate="G$1" pin="CS"/>
-<wire x1="264.16" y1="147.32" x2="259.08" y2="147.32" width="0.1524" layer="91"/>
-<label x="259.08" y="147.32" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="D5" class="0">
 <segment>
@@ -7424,12 +7409,10 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <wire x1="154.94" y1="104.14" x2="162.56" y2="104.14" width="0.1524" layer="91"/>
 <label x="157.48" y="104.14" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="VCC" class="0">
 <segment>
-<pinref part="EXHEADER_A0-3" gate="G$1" pin="4"/>
-<wire x1="215.9" y1="132.08" x2="220.98" y2="132.08" width="0.1524" layer="91"/>
-<label x="215.9" y="132.08" size="1.778" layer="95"/>
+<pinref part="R3" gate="G$1" pin="2"/>
+<wire x1="248.92" y1="215.9" x2="248.92" y2="220.98" width="0.1524" layer="91"/>
+<label x="248.92" y="215.9" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="A3" class="0">
@@ -7550,6 +7533,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="EXHEADER_A0-3" gate="G$1" pin="12"/>
 <wire x1="215.9" y1="111.76" x2="220.98" y2="111.76" width="0.1524" layer="91"/>
 <label x="215.9" y="111.76" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="SDSLOT" gate="G$1" pin="CS"/>
+<wire x1="264.16" y1="147.32" x2="259.08" y2="147.32" width="0.1524" layer="91"/>
+<label x="259.08" y="147.32" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="A6" class="0">
@@ -7678,6 +7666,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <wire x1="132.08" y1="165.1" x2="139.7" y2="165.1" width="0.1524" layer="91"/>
 <label x="134.62" y="165.1" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="EXHEADER_A0-3" gate="G$1" pin="4"/>
+<wire x1="215.9" y1="132.08" x2="220.98" y2="132.08" width="0.1524" layer="91"/>
+<label x="215.9" y="132.08" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="BAT_IN" class="0">
 <segment>
@@ -7685,11 +7678,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="S1" gate="1" pin="S"/>
 <wire x1="132.08" y1="106.68" x2="147.32" y2="106.68" width="0.1524" layer="91"/>
 <label x="134.62" y="106.68" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="248.92" y1="215.9" x2="248.92" y2="220.98" width="0.1524" layer="91"/>
-<label x="248.92" y="215.9" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -7704,6 +7692,18 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="RED_LED" gate="G$1" pin="A"/>
 <pinref part="R_RLED" gate="G$1" pin="1"/>
 <wire x1="152.4" y1="203.2" x2="152.4" y2="208.28" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="RST2" class="0">
+<segment>
+<pinref part="ARDUINO_D2-9" gate="G$1" pin="3"/>
+<wire x1="187.96" y1="172.72" x2="182.88" y2="172.72" width="0.1524" layer="91"/>
+<label x="182.88" y="172.72" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="EXHEADER_D2-9" gate="G$1" pin="3"/>
+<wire x1="187.96" y1="134.62" x2="182.88" y2="134.62" width="0.1524" layer="91"/>
+<label x="182.88" y="134.62" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
