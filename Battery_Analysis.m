@@ -16,22 +16,28 @@ sleepLow = 3.60;        % mA - Lowest reading measured while sleeping
 sleepHigh = 3.90;       % mA - Highest reading measured while sleeping
 wakeLow = 12;           % mA - Lowest reading measured while awake
 wakeHigh = 40;          % mA - Highest reading measured while awake
-sleepTime = 9.5;        % s
-wakeTime = 0.5;         % s
 
 
-%% Calculate battery lifespan
-sleepTime = sleepTime/3600;     % Convert to hours
-wakeTime = wakeTime/3600;       % Convert to hours
+%% Vary sleeptime to see effect on battery life
+wakeTime = 0.5/3600;       % Convert seconds to hours
+sleepTime = (5:0.5:60)/3600;
 totCapacity = numBatsParallel*batCapacity;
-avgCurrentLow = (1/(sleepTime + wakeTime)) * (sleepLow*sleepTime + wakeLow*wakeTime);
-avgCurrentHigh = (1/(sleepTime + wakeTime) * (sleepHigh*sleepTime + wakeHigh*wakeTime));
-highEstimate = totCapacity/avgCurrentLow;
-lowEstimate = totCapacity/avgCurrentHigh;
+avgCurrentLow = (1./(sleepTime + wakeTime)) .* (sleepLow*sleepTime + wakeLow*wakeTime);
+avgCurrentHigh = (1./(sleepTime + wakeTime) .* (sleepHigh*sleepTime + wakeHigh*wakeTime));
+highEstimate = totCapacity./avgCurrentLow;
+lowEstimate = totCapacity./avgCurrentHigh;
 
 
-%% Display
-he = sprintf('The high life estimate is %f hours (%f days)', highEstimate, highEstimate/24);
-le = sprintf('The low life estimate is %f hours (%f days)', lowEstimate, lowEstimate/24);
-disp(he);
-disp(le);
+%% Plot
+wakeTime = wakeTime * 3600;     % Get back to seconds
+sleepTime = sleepTime * 3600;
+
+figure()
+hold all
+plot(sleepTime, lowEstimate/24);
+plot(sleepTime, highEstimate/24);
+title(sprintf('Battery Life Estimates |::| %d mAh total capacity with %f second waketime', totCapacity, wakeTime));
+xlabel('Sleep Time (Seconds)');
+ylabel('Battery Life (Days)');
+legend('Low Estimate','High Estimate');
+grid on

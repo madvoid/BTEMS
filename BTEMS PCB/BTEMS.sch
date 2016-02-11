@@ -7119,13 +7119,13 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="BAT_HEADER" library="SparkFun-Connectors" deviceset="M02" device="2.54MM_SCREWTERM"/>
 <part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-SPDT" device="PTH"/>
-<part name="R3" library="adafruit" deviceset="R-US_" device="0207/7" value="24k"/>
-<part name="R4" library="adafruit" deviceset="R-US_" device="0207/7" value="30k"/>
+<part name="R1" library="adafruit" deviceset="R-US_" device="0207/7" value="R1"/>
+<part name="R2" library="adafruit" deviceset="R-US_" device="0207/7" value="R2"/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GREEN_LED" library="adafruit" deviceset="LED" device="3MM"/>
 <part name="RED_LED" library="adafruit" deviceset="LED" device="3MM"/>
-<part name="R_GLED" library="adafruit" deviceset="R-US_" device="0207/7"/>
-<part name="R_RLED" library="adafruit" deviceset="R-US_" device="0207/7"/>
+<part name="R_GLED" library="adafruit" deviceset="R-US_" device="0207/7" value="220"/>
+<part name="R_RLED" library="adafruit" deviceset="R-US_" device="0207/7" value="270"/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="RTC_HEADER" library="SparkFun-Connectors" deviceset="M06" device="FEMALE_LOCK"/>
 </parts>
@@ -7154,8 +7154,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="GND2" gate="1" x="233.68" y="172.72"/>
 <instance part="BAT_HEADER" gate="G$1" x="124.46" y="104.14"/>
 <instance part="S1" gate="1" x="152.4" y="104.14" rot="R180"/>
-<instance part="R3" gate="G$1" x="248.92" y="210.82" rot="R90"/>
-<instance part="R4" gate="G$1" x="248.92" y="195.58" rot="R90"/>
+<instance part="R1" gate="G$1" x="248.92" y="210.82" rot="R90"/>
+<instance part="R2" gate="G$1" x="248.92" y="195.58" rot="R90"/>
 <instance part="GND3" gate="1" x="248.92" y="185.42"/>
 <instance part="GREEN_LED" gate="G$1" x="142.24" y="200.66"/>
 <instance part="RED_LED" gate="G$1" x="152.4" y="200.66"/>
@@ -7261,7 +7261,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <label x="134.62" y="104.14" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R4" gate="G$1" pin="1"/>
+<pinref part="R2" gate="G$1" pin="1"/>
 <wire x1="248.92" y1="190.5" x2="248.92" y2="187.96" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 </segment>
@@ -7410,7 +7410,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <label x="157.48" y="104.14" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R3" gate="G$1" pin="2"/>
+<pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="248.92" y1="215.9" x2="248.92" y2="220.98" width="0.1524" layer="91"/>
 <label x="248.92" y="215.9" size="1.778" layer="95" rot="R90"/>
 </segment>
@@ -7427,8 +7427,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <label x="215.9" y="129.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="R3" gate="G$1" pin="1"/>
-<pinref part="R4" gate="G$1" pin="2"/>
+<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="248.92" y1="205.74" x2="248.92" y2="203.2" width="0.1524" layer="91"/>
 <wire x1="248.92" y1="203.2" x2="248.92" y2="200.66" width="0.1524" layer="91"/>
 <wire x1="254" y1="203.2" x2="248.92" y2="203.2" width="0.1524" layer="91"/>

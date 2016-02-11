@@ -9,10 +9,11 @@
 //   - After uploading code, the user should wait until the program has fully started and taken a few
 //     readings before unplugging from the computer
 //   - Current delay in realtime is a little less than 10 seconds
+//   - If four AA batteries are used, the resistor divider should consist of a 24k high-side resistor (R1)
+//     and a 30k low-side resistor (R2)
 //
 // TODO:
 //   - Add support for 999 files
-//   - Change green LED to blink during measurement, not after
 //
 // Current consumption values:
 //   - 3.60 to 3.90 mA during sleep
@@ -146,6 +147,7 @@ void setup() {
 void loop() {
 
   // Gather measurements
+  digitalWrite(GRN_LED_PIN, HIGH);  // Start blink
   shtAmb = SHT2x.GetTemperature();
   mlxAmb = mlx.readAmbientTempC();
   mlxIR = mlx.readObjectTempC();
@@ -215,8 +217,9 @@ void loop() {
     logfile.flush();                                  //Save file
   }
 
-  //Blink Green LED
-  blinkGreenLED(200);
+  // End Blink Green LED
+  digitalWrite(GRN_LED_PIN, LOW);
+
 
   // Delay/Sleep
   Narcoleptic.delay(8200);
