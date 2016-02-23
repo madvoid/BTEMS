@@ -8,12 +8,12 @@ clear all, close all, clc
 
 
 %% Initialize variables
-numBatsSeries = 4;      % Natural number
-numBatsParallel = 1;    % Natural number, don't use 0
+numBatsSeries = 3;      % Natural number
+numBatsParallel = 2;    % Natural number, don't use 0
 voltsPerBat = 1.5;      % V
 batCapacity = 2500;     % mAh
-sleepLow = 3.60;        % mA - Lowest reading measured while sleeping
-sleepHigh = 3.90;       % mA - Highest reading measured while sleeping
+sleepLow = 2.02;        % mA - Lowest reading measured while sleeping
+sleepHigh = 4.40;       % mA - Highest reading measured while sleeping
 wakeLow = 12;           % mA - Lowest reading measured while awake
 wakeHigh = 40;          % mA - Highest reading measured while awake
 

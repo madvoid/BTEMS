@@ -16,8 +16,9 @@
 //   - Add support for 999 files
 //
 // Current consumption values:
-//   - 3.60 to 3.90 mA during sleep
+//   - 3.60 to 4.40 mA during sleep with knockoff RTC
 //   - At least 12.5mA during write, assume 20mA-40mA during write
+//   - 2.02 mA during sleep with adafruit RTC
 //
 // ------------------------------------------------------------------------------------------------
 

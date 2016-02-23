@@ -13,6 +13,7 @@ This is the repository for the BTEMS Sensor Stations. Arduino code is in the ```
 ### Code TODO
 1. See code comments
 2. Make LED blink shorter
+3. Put MLX to sleep. Send sleep command via I2C and make power off of digital pin. POR to wake up
 
 ### Version 1.1 Todo
 1. Add capacitors to 3.3V line to smooth?
