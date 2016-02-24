@@ -14,6 +14,7 @@
 //
 // TODO:
 //   - Add support for 999 files
+//   - Find out if MLX90614 needs dummy reading after power on
 //
 // Current consumption values:
 //   - 3.60 to 4.40 mA during sleep with knockoff RTC
@@ -44,6 +45,7 @@
 #define GRN_LED_PIN 9     // Pin used for green LED
 #define BAT_PIN A3        // Pin used to measure battery level
 #define CHIP_SELECT 10    // Chip select pin for SD card
+#define MLX_PIN 8         // MLX90614 power pin
 
 
 
@@ -71,8 +73,10 @@ char filename[] = "BTM_00.CSV";     // Prototype filename
 
 // Function Prototypes ----------------------------------------------------------------------------
 void error(char *str);                  // Error function prototype
-void blinkGreenLED(unsigned long m);    //Blinking Green LED function
-void blinkRedLED(unsigned long m);      //Blinking Red LED function
+void blinkGreenLED(unsigned long m);    // Blinking Green LED function
+void blinkRedLED(unsigned long m);      // Blinking Red LED function
+void mlxOn(int mlxPin);               // Wake up MLX90614
+void mlxOff(int mlxPin);                    // Put MLX90614 to sleep
 
 
 
@@ -120,10 +124,10 @@ void setup() {
   // Check if the RTC is running.
   // TODO: Determine whether chunk is necessary
   // Doesn't work when uncommented, why?
-//  if (! RTC.isrunning()) {
-//    Serial.println("RTC is NOT running");
-//    error("RTC is NOT running");
-//  }
+  //  if (! RTC.isrunning()) {
+  //    Serial.println("RTC is NOT running");
+  //    error("RTC is NOT running");
+  //  }
 
   // Gets current datetime and compares it to compilation time
   DateTime now = RTC.now();
@@ -147,22 +151,52 @@ void setup() {
 // Loop Function ----------------------------------------------------------------------------------
 void loop() {
 
-  // Gather measurements
-  digitalWrite(GRN_LED_PIN, HIGH);  // Start blink
+  // Get battery level
+  mlxOn(MLX_PIN);                     // Turn on MLX90614
+  batRaw = 0;
+  for (int i = 0; i < 3; i++) {
+    batRaw += analogRead(BAT_PIN);    // Average battery readings, division happens below
+  }
+  batLvl = ( ((float)batRaw) * (3.3 / 1024.0 / 3.0) * (float)(R1 + R2) ) / ((float)R2);
+
+  // Get the current time
+  DateTime now = RTC.now();
+
+  // Get measurements
   shtAmb = SHT2x.GetTemperature();
   mlxAmb = mlx.readAmbientTempC();
   mlxIR = mlx.readObjectTempC();
   shtHum = SHT2x.GetHumidity();
+  mlxOff(MLX_PIN);                   // Turn off MLX90614
 
-  batRaw = 0;
-  for(int i = 0; i < 3; i++){
-    batRaw += analogRead(BAT_PIN);    // Average battery readings, division happens below
+  // Write to SD card & blink
+  digitalWrite(GRN_LED_PIN, HIGH);  // Start blink
+  if (logfile) {
+    logfile.print(now.year(), DEC);
+    logfile.print(", ");
+    logfile.print(now.month(), DEC);
+    logfile.print(", ");
+    logfile.print(now.day(), DEC);
+    logfile.print(", ");
+    logfile.print(now.hour(), DEC);
+    logfile.print(", ");
+    logfile.print(now.minute(), DEC);
+    logfile.print(", ");
+    logfile.print(now.second(), DEC);
+    logfile.print(", ");
+    logfile.print(shtAmb);
+    logfile.print(", ");
+    logfile.print(shtHum);
+    logfile.print(", ");
+    logfile.print(mlxIR);
+    logfile.print(", ");
+    logfile.print(mlxAmb);
+    logfile.print(", ");
+    logfile.print(batLvl);
+    logfile.println();
+    logfile.flush();                                  //Save file
   }
-  
-  batLvl = ( ((float)batRaw)*(3.3/1024.0/3.0) * (float)(R1 + R2) ) / ((float)R2);
-
-  // Get the current time
-  DateTime now = RTC.now();
+  digitalWrite(GRN_LED_PIN, LOW);   // End blink
 
   // Write to Serial Monitor
 #if DEBUG
@@ -191,46 +225,16 @@ void loop() {
   Serial.flush();
 #endif
 
-  // Write to SD card
-  if (logfile) {
-    logfile.print(now.year(), DEC);
-    logfile.print(", ");
-    logfile.print(now.month(), DEC);
-    logfile.print(", ");
-    logfile.print(now.day(), DEC);
-    logfile.print(", ");
-    logfile.print(now.hour(), DEC);
-    logfile.print(", ");
-    logfile.print(now.minute(), DEC);
-    logfile.print(", ");
-    logfile.print(now.second(), DEC);
-    logfile.print(", ");
-    logfile.print(shtAmb);
-    logfile.print(", ");
-    logfile.print(shtHum);
-    logfile.print(", ");
-    logfile.print(mlxIR);
-    logfile.print(", ");
-    logfile.print(mlxAmb);
-    logfile.print(", ");
-    logfile.print(batLvl);
-    logfile.println();
-    logfile.flush();                                  //Save file
-  }
-
-  // End Blink Green LED
-  digitalWrite(GRN_LED_PIN, LOW);
-
-
   // Delay/Sleep
   Narcoleptic.delay(8200);
   // delay(9421);
+
 }
 
 
 
 
-//Blink LED Functions --------------------------------------------------------------------------------
+// Blink LED Functions -------------------------------------------------------------------------------
 void blinkGreenLED(unsigned long m) {
   //Blinks Green LED
   digitalWrite(GRN_LED_PIN, HIGH);
@@ -248,7 +252,7 @@ void blinkRedLED(unsigned long m) {
 
 
 
-//Error Function --------------------------------------------------------------------------------------
+// Error Function -------------------------------------------------------------------------------------
 void error(const char *str) {
   //Turns on red LED
   digitalWrite(RED_LED_PIN, HIGH);
@@ -261,3 +265,16 @@ void error(const char *str) {
 
   while (1);
 }
+
+
+
+
+// MLX90614 Functions ---------------------------------------------------------------------------------
+void mlxOn(int mlxPin) {
+  digitalWrite(mlxPin, HIGH);
+}
+
+void mlxOff(int mlxPin) {
+  digitalWrite(mlxPin, LOW);
+}
+
