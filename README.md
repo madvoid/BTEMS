@@ -7,13 +7,10 @@ This is the repository for the BTEMS Sensor Stations. Arduino code is in the ```
 
 ### General TODO
 1. Update BOM
-2. Find battery holder
 3. Add correct voltage divider resistor to account for batteries
 
 ### Code TODO
 1. See code comments
-2. Make LED blink shorter
-3. Put MLX to sleep. Send sleep command via I2C and make power off of digital pin. POR to wake up
 
 ### Version 1.1 Todo
 4. Move via near RTC header bottom ground pin
@@ -24,3 +21,10 @@ This is the repository for the BTEMS Sensor Stations. Arduino code is in the ```
 9. Add male headers to sensor plugs
 10. Want jumper wires for final product
 11. Want MLX switching for final product?
+12. Standard size resistors for LEDs
+13. Buy better edge cutters
+14. Move 'Environmental Fluid Dynamics Lab' text up (away from switch) a little bit
+15. Move 'Off' text down a little bit
+16. Decide on 3- or 4-battery holder
+17. Move '+/-' text for battery input terminal to more visible location
+18. Center RTC against SD card slot?
