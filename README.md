@@ -16,7 +16,11 @@ This is the repository for the BTEMS Sensor Stations. Arduino code is in the ```
 3. Put MLX to sleep. Send sleep command via I2C and make power off of digital pin. POR to wake up
 
 ### Version 1.1 Todo
-1. Add capacitors to 3.3V line to smooth?
-2. Switch header orientation to favor adafruit RTC
-3. Move RTC header down a bit
 4. Move via near RTC header bottom ground pin
+5. Move resistors away from LEDs
+6. Move arduino external headers away from arduino?
+7. Switch to larger screw terminal?
+8. Switch vertical direction of arduino headers (tall side up)?
+9. Add male headers to sensor plugs
+10. Want jumper wires for final product
+11. Want MLX switching for final product?

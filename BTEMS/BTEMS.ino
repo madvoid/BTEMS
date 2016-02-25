@@ -120,10 +120,10 @@ void setup() {
   // Check if the RTC is running.
   // TODO: Determine whether chunk is necessary
   // Doesn't work when uncommented, why?
-//  if (! RTC.isrunning()) {
-//    Serial.println("RTC is NOT running");
-//    error("RTC is NOT running");
-//  }
+  //  if (! RTC.isrunning()) {
+  //    Serial.println("RTC is NOT running");
+  //    error("RTC is NOT running");
+  //  }
 
   // Gets current datetime and compares it to compilation time
   DateTime now = RTC.now();
@@ -155,41 +155,14 @@ void loop() {
   shtHum = SHT2x.GetHumidity();
 
   batRaw = 0;
-  for(int i = 0; i < 3; i++){
+  for (int i = 0; i < 3; i++) {
     batRaw += analogRead(BAT_PIN);    // Average battery readings, division happens below
   }
-  
-  batLvl = ( ((float)batRaw)*(3.3/1024.0/3.0) * (float)(R1 + R2) ) / ((float)R2);
+
+  batLvl = ( ((float)batRaw) * (3.3 / 1024.0 / 3.0) * (float)(R1 + R2) ) / ((float)R2);
 
   // Get the current time
   DateTime now = RTC.now();
-
-  // Write to Serial Monitor
-#if DEBUG
-  Serial.print(now.year(), DEC);
-  Serial.print(", ");
-  Serial.print(now.month(), DEC);
-  Serial.print(", ");
-  Serial.print(now.day(), DEC);
-  Serial.print(", ");
-  Serial.print(now.hour(), DEC);
-  Serial.print(", ");
-  Serial.print(now.minute(), DEC);
-  Serial.print(", ");
-  Serial.print(now.second(), DEC);
-  Serial.print(", ");
-  Serial.print(shtAmb);
-  Serial.print(", ");
-  Serial.print(shtHum);
-  Serial.print(", ");
-  Serial.print(mlxIR);
-  Serial.print(", ");
-  Serial.print(mlxAmb);
-  Serial.print(", ");
-  Serial.print(batLvl);
-  Serial.println();
-  Serial.flush();
-#endif
 
   // Write to SD card
   if (logfile) {
@@ -221,6 +194,32 @@ void loop() {
   // End Blink Green LED
   digitalWrite(GRN_LED_PIN, LOW);
 
+  // Write to Serial Monitor
+#if DEBUG
+  Serial.print(now.year(), DEC);
+  Serial.print(", ");
+  Serial.print(now.month(), DEC);
+  Serial.print(", ");
+  Serial.print(now.day(), DEC);
+  Serial.print(", ");
+  Serial.print(now.hour(), DEC);
+  Serial.print(", ");
+  Serial.print(now.minute(), DEC);
+  Serial.print(", ");
+  Serial.print(now.second(), DEC);
+  Serial.print(", ");
+  Serial.print(shtAmb);
+  Serial.print(", ");
+  Serial.print(shtHum);
+  Serial.print(", ");
+  Serial.print(mlxIR);
+  Serial.print(", ");
+  Serial.print(mlxAmb);
+  Serial.print(", ");
+  Serial.print(batLvl);
+  Serial.println();
+  Serial.flush();
+#endif
 
   // Delay/Sleep
   Narcoleptic.delay(8200);
