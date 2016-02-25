@@ -40,7 +40,7 @@
 
 
 // Defining ---------------------------------------------------------------------------------------
-#define DEBUG 0           // Used to Show Serial Monitor during Debugging
+#define DEBUG 1           // Used to Show Serial Monitor during Debugging
 #define RED_LED_PIN 6     // Pin used for red LED
 #define GRN_LED_PIN 9     // Pin used for green LED
 #define BAT_PIN A3        // Pin used to measure battery level
@@ -152,7 +152,9 @@ void setup() {
 void loop() {
 
   // Get battery level
-  mlxOn(MLX_PIN);                     // Turn on MLX90614
+  mlxOn(MLX_PIN);
+  unsigned long startTime = millis();
+  delay(250);
   batRaw = 0;
   for (int i = 0; i < 3; i++) {
     batRaw += analogRead(BAT_PIN);    // Average battery readings, division happens below
@@ -163,14 +165,15 @@ void loop() {
   DateTime now = RTC.now();
 
   // Get measurements
+  mlxIR = mlx.readObjectTempC();    // Dummy read
+  digitalWrite(GRN_LED_PIN, HIGH);  // Start blink
   shtAmb = SHT2x.GetTemperature();
   mlxAmb = mlx.readAmbientTempC();
   mlxIR = mlx.readObjectTempC();
   shtHum = SHT2x.GetHumidity();
-  mlxOff(MLX_PIN);                   // Turn off MLX90614
+  mlxOff(MLX_PIN);
 
   // Write to SD card & blink
-  digitalWrite(GRN_LED_PIN, HIGH);  // Start blink
   if (logfile) {
     logfile.print(now.year(), DEC);
     logfile.print(", ");
@@ -197,6 +200,7 @@ void loop() {
     logfile.flush();                                  //Save file
   }
   digitalWrite(GRN_LED_PIN, LOW);   // End blink
+  unsigned long diffTime = millis() - startTime;
 
   // Write to Serial Monitor
 #if DEBUG
@@ -221,6 +225,8 @@ void loop() {
   Serial.print(mlxAmb);
   Serial.print(", ");
   Serial.print(batLvl);
+  Serial.print(", ");
+  Serial.print(diffTime);
   Serial.println();
   Serial.flush();
 #endif
