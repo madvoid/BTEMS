@@ -7117,10 +7117,10 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="MLX_HEADER" library="SparkFun-Connectors" deviceset="M04" device="LOCK"/>
 <part name="SHT_HEADER" library="SparkFun-Connectors" deviceset="M04" device="LOCK"/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="BAT_HEADER" library="SparkFun-Connectors" deviceset="M02" device="2.54MM_SCREWTERM"/>
+<part name="BAT_HEADER" library="SparkFun-Connectors" deviceset="M02" device="3.5MM"/>
 <part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-SPDT" device="PTH"/>
-<part name="R1" library="adafruit" deviceset="R-US_" device="0207/7" value="R1"/>
-<part name="R2" library="adafruit" deviceset="R-US_" device="0207/7" value="R2"/>
+<part name="R1" library="adafruit" deviceset="R-US_" device="0207/7" value="24k"/>
+<part name="R2" library="adafruit" deviceset="R-US_" device="0207/7" value="30k"/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GREEN_LED" library="adafruit" deviceset="LED" device="3MM"/>
 <part name="RED_LED" library="adafruit" deviceset="LED" device="3MM"/>
@@ -7128,6 +7128,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="R_RLED" library="adafruit" deviceset="R-US_" device="0207/7" value="270"/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="RTC_HEADER" library="SparkFun-Connectors" deviceset="M06" device="FEMALE_LOCK"/>
+<part name="EXHEADER_POW1" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 </parts>
 <sheets>
 <sheet>
@@ -7163,6 +7164,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="R_RLED" gate="G$1" x="152.4" y="213.36" rot="R90"/>
 <instance part="GND4" gate="1" x="147.32" y="187.96"/>
 <instance part="RTC_HEADER" gate="G$1" x="127" y="167.64"/>
+<instance part="EXHEADER_POW1" gate="G$1" x="124.46" y="88.9"/>
 </instances>
 <busses>
 </busses>
@@ -7285,6 +7287,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="RTC_HEADER" gate="G$1" pin="5"/>
 <wire x1="132.08" y1="172.72" x2="139.7" y2="172.72" width="0.1524" layer="91"/>
 <label x="134.62" y="172.72" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="EXHEADER_POW1" gate="G$1" pin="1"/>
+<wire x1="132.08" y1="88.9" x2="139.7" y2="88.9" width="0.1524" layer="91"/>
+<label x="134.62" y="88.9" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D2" class="0">
@@ -7670,6 +7677,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="RTC_HEADER" gate="G$1" pin="6"/>
 <wire x1="132.08" y1="175.26" x2="139.7" y2="175.26" width="0.1524" layer="91"/>
 <label x="134.62" y="175.26" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="EXHEADER_POW1" gate="G$1" pin="2"/>
+<wire x1="132.08" y1="91.44" x2="139.7" y2="91.44" width="0.1524" layer="91"/>
+<label x="134.62" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="BAT_IN" class="0">
