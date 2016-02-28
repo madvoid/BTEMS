@@ -7129,6 +7129,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="RTC_HEADER" library="SparkFun-Connectors" deviceset="M06" device="FEMALE_LOCK"/>
 <part name="EXHEADER_POW1" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="EXHEADER2_A4_5" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 </parts>
 <sheets>
 <sheet>
@@ -7165,6 +7166,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="GND4" gate="1" x="147.32" y="187.96"/>
 <instance part="RTC_HEADER" gate="G$1" x="127" y="167.64"/>
 <instance part="EXHEADER_POW1" gate="G$1" x="124.46" y="88.9"/>
+<instance part="EXHEADER2_A4_5" gate="G$1" x="124.46" y="73.66"/>
 </instances>
 <busses>
 </busses>
@@ -7600,6 +7602,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <wire x1="132.08" y1="167.64" x2="139.7" y2="167.64" width="0.1524" layer="91"/>
 <label x="134.62" y="167.64" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="EXHEADER2_A4_5" gate="G$1" pin="1"/>
+<wire x1="132.08" y1="73.66" x2="139.7" y2="73.66" width="0.1524" layer="91"/>
+<label x="134.62" y="73.66" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="SCL" class="0">
 <segment>
@@ -7629,6 +7636,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="RTC_HEADER" gate="G$1" pin="4"/>
 <wire x1="132.08" y1="170.18" x2="139.7" y2="170.18" width="0.1524" layer="91"/>
 <label x="134.62" y="170.18" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="EXHEADER2_A4_5" gate="G$1" pin="2"/>
+<wire x1="132.08" y1="76.2" x2="139.7" y2="76.2" width="0.1524" layer="91"/>
+<label x="134.62" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
