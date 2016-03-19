@@ -9,12 +9,10 @@ This is the repository for the BTEMS Sensor Stations. Arduino code is in the ```
 1. Update BOM
 
 ### Code TODO
-1. See code comments
+1. Start labeling BTEMS
 
 ### Version 1.1 Todo
-8. Switch vertical direction of arduino headers (tall side up)?
-9. Add male headers to sensor plugs
-11. Want MLX switching for final product? - Not for v1.1
+1. Check current measurements
 
 ### To Buy
 1.
