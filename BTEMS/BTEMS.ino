@@ -22,6 +22,8 @@
 //
 // ------------------------------------------------------------------------------------------------
 
+// !! Change Filename depending on station !!
+char filename[] = "BTM00_00.CSV";     // Prototype filename
 
 
 
@@ -64,7 +66,7 @@ Adafruit_MLX90614 mlx = Adafruit_MLX90614();  // MLX90614 Class
 RTC_DS3231 RTC;                               // RTC Class
 
 File logfile;               // Data object you will write your sensor data to
-char filename[] = "BTM_00.CSV";     // Prototype filename
+
 
 
 
@@ -97,8 +99,8 @@ void setup() {
 
   // Create filename, open SD Card File
   for (uint8_t i = 0; i < 100; i++) {            // Indexes file every time program is restarted
-    filename[4] = i / 10 + '0';                  // !! Will stop at 99 !!
-    filename[5] = i % 10 + '0';
+    filename[6] = i / 10 + '0';                  // !! Will stop at 99 !!
+    filename[7] = i % 10 + '0';
     if (! SD.exists(filename)) {
       logfile = SD.open(filename, FILE_WRITE);
       break;
