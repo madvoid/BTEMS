@@ -6,13 +6,13 @@ This is the repository for the BTEMS Sensor Stations. Arduino code is in the ```
 1.
 
 ### General TODO
-1. Update BOM
+1. Testing!!
 
 ### Code TODO
-1. Start labeling BTEMS
+1. 
 
 ### Version 1.1 Todo
-1. Check current measurements
+1. Check current measurements with nice multimeter. Get average of several boards
 
 ### To Buy
 1.
