@@ -22,8 +22,8 @@
 //
 // ------------------------------------------------------------------------------------------------
 
-// !! Change Filename depending on station !!
-char filename[] = "BTM00_00.CSV";     // Prototype filename
+// !! Change Filename depending on station. Change the XX below to hexadecimal number !!
+char filename[] = "BTMXX_00.CSV";     // Prototype filename
 
 
 
