@@ -7,6 +7,7 @@ This is the repository for the BTEMS Sensor Stations. Arduino code is in the ```
 
 ### General TODO
 1. Testing!!
+2. Add instructions section to README.md
 
 ### Code TODO
 1. 
