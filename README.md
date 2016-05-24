@@ -28,9 +28,21 @@ To turn off, wait until the green LED blinks, then turn the switch from 'ON' to 
 	* `SHT_Plug.*` - The CAD files for the plug that holds the SHT21. Edit the .SLDPRT file, submit the .STL file for 3D printing, and view the .pdf file. The .STL file can be easily previewed within Github
 * `Bill of Materials.xlsx` - BTEMS bill of materials. Should be 99.9% complete. Missing any mounting hardware or insulation materials.
 
+### Troubleshooting
+* Red Light: SD card problem. Is there an SD card? Is it good? Is it formatted?
+* No Lights: Possible sensor problem. Are they plugged in? Are they good? Are they plugged in backwards?
+
 ### To-Do
 1. Testing
 2. Check current measurements with nice multimeter. Get average of several boards
 
 ### Assembly Instructions
-To be added...
+1. Solder SD card holder to PCB
+2. Solder female RTC header to PCB
+3. Solder four male header pins to RTC in the PWR, GND, SCL, SDA holes
+4. Solder resistors in corect place
+5. Solder power switch in place
+6. Solder power screw terminal in place. Make sure screw terminal is straight and fits flush on the PCB!
+7. Solder Arduino in place. The programming header on the Arduino should be near on the side of the power switch. Use regular male headers, and the long side of the headers should be pointing up from the board. Make sure all the pins on the Arduino, especially the four pins in the middle of the arduino, are passed through to the PCB.
+8. Solder male headers for sensor plug ins in place
+Detail to be added...

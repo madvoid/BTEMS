@@ -23,7 +23,7 @@
 // ------------------------------------------------------------------------------------------------
 
 // !! Change Filename depending on station. Change the XX below to hexadecimal number !!
-char filename[] = "BTMXX_00.CSV";     // Prototype filename
+char filename[] = "BTM01_00.CSV";     // Prototype filename
 
 
 
@@ -35,7 +35,7 @@ char filename[] = "BTMXX_00.CSV";     // Prototype filename
 #include <Wire.h>         // I2C Library                    Included
 #include <Adafruit_MLX90614.h>  // Infrared Temp Library    https://github.com/adafruit/Adafruit-MLX90614-Library
 #include <RTClib.h>       // RTC Library                    https://github.com/mizraith/RTClib
-#include <RTC_DS3231.h>   // From RTClib, DS3231 specific library
+//#include <RTC_DS3231.h>   // From RTClib, DS3231 specific library
 
 
 
