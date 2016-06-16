@@ -48,7 +48,7 @@ legend('SHT15');
 %% Plot Battery Level
 figure()
 hold on
-plot(dates, batLvl);
+plot(dates, batLvl, '.');
 xlabel('Date');
 ylabel('Battery Level (V)');
 title('Battery Level');
