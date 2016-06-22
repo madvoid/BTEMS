@@ -33,8 +33,10 @@ To turn off, wait until the green LED blinks, then turn the switch from 'ON' to 
 * No Lights: Possible sensor problem. Are they plugged in? Are they good? Are they plugged in backwards?
 
 ### To-Do
-1. Testing
-2. Check current measurements with nice multimeter. Get average of several boards
+1. Measurement validation
+
+### Notes
+* Heat ruins the battery life. Outdoor BTEMS will perform poorly compared to the indoor ones.
 
 ### Assembly Instructions
 1. Solder SD card holder to PCB
