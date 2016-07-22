@@ -29,7 +29,8 @@ To turn off, wait until the green LED blinks, then turn the switch from 'ON' to 
 * `Bill of Materials.xlsx` - BTEMS bill of materials. Should be 99.9% complete. Missing any mounting hardware or insulation materials.
 
 ### Troubleshooting
-* Red Light: SD card problem. Is there an SD card? Is it good? Is it formatted?
+* Red Light: SD card problem. Is there an SD card? Is it working? Is it formatted? 
+	* In one instance, one of the batteries leaked, leaving residue all over the battery holder. The unit would turn on, but a new file would not be able to be created, and the red light would show. After cleaning the residue and replacing the batteries, the unit worked. It is suspected that the residue limited the amount of current available to the unit, which prevented the SD card from working properly.
 * No Lights: Possible sensor problem. Are they plugged in? Are they good? Are they plugged in backwards?
 
 ### To-Do

@@ -15,6 +15,9 @@
 // TODO:
 //   - Add support for 999 files
 //
+// Compile Settings: Board: "Arduino Pro or Pro Mini"
+//                   Processor: "ATmega 328 (3.3V, 8MHz)"
+//
 // Current consumption values:
 //   - 3.60 to 4.40 mA during sleep with knockoff RTC
 //   - At least 12.5mA during write, assume 20mA-40mA during write
@@ -23,7 +26,7 @@
 // ------------------------------------------------------------------------------------------------
 
 // !! Change Filename depending on station. Change the XX below to hexadecimal number !!
-char filename[] = "BTM02_00.CSV";     // Prototype filename
+char filename[] = "BTM07_00.CSV";     // Prototype filename
 
 
 
