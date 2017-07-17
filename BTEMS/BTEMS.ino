@@ -11,6 +11,7 @@
 //   - Current delay in realtime is a little less than 10 seconds
 //   - If four AA batteries are used, the resistor divider should consist of a 24k high-side resistor (R1)
 //     and a 30k low-side resistor (R2)
+//   - The original SHT2x library repository was deleted, which is why it's included with this code
 //
 // TODO:
 //   - Add support for 999 files
@@ -26,19 +27,18 @@
 // ------------------------------------------------------------------------------------------------
 
 // !! Change Filename depending on station. Change the XX below to hexadecimal number !!
-char filename[] = "BTM07_00.CSV";     // Prototype filename
+char filename[] = "BTM08_00.CSV";     // Prototype filename
 
 
 
 // Includes ---------------------------------------------------------------------------------------
-#include <Narcoleptic.h>  // Sleep Library                  https://code.google.com/archive/p/narcoleptic/
-#include <SD.h>           // SD card                        Included
-#include <SPI.h>          // SPI Library                    Included
-#include <SHT2x.h>        // SHT21 Library                  https://github.com/misenso/SHT2x-Arduino-Library            
-#include <Wire.h>         // I2C Library                    Included
 #include <Adafruit_MLX90614.h>  // Infrared Temp Library    https://github.com/adafruit/Adafruit-MLX90614-Library
+#include <Narcoleptic.h>  // Sleep Library                  https://code.google.com/archive/p/narcoleptic/
 #include <RTClib.h>       // RTC Library                    https://github.com/mizraith/RTClib
-//#include <RTC_DS3231.h>   // From RTClib, DS3231 specific library
+#include <SD.h>           // SD card                        Included
+#include "SHT2x.h"        // SHT21 Library                  Included in same folder            
+#include <SPI.h>          // SPI Library                    Included
+#include <Wire.h>         // I2C Library                    Included
 
 
 

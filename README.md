@@ -11,26 +11,28 @@ To turn off, wait until the green LED blinks, then turn the switch from 'ON' to 
 
 ### File Descriptions
 * BTEMS/
-	* `BTEMS.ino` - BTEMS arduino sketch
+ * `BTEMS.ino` - BTEMS arduino sketch
+ * `SHT2x.h` - SHT21 library header
+ * `SHT2x.cpp` - SHT21 library file
 * BTEMS PCB/
-	* `BTEMS.brd` - Eagle board file for BTEMS PCB
-	* `BTEMS.sch` - Eagle schematic file for BTEMS PCB
-	* `BTEMS.*.ger` - BTEMS gerber files for manufacturing
-	* `BTEMS.*.xln` - More BTEMS manufacturing files
-	* `eagle.epf` - Eagle preferences file
+ * `BTEMS.brd` - Eagle board file for BTEMS PCB
+ * `BTEMS.sch` - Eagle schematic file for BTEMS PCB
+ * `BTEMS.*.ger` - BTEMS gerber files for manufacturing
+ * `BTEMS.*.xln` - More BTEMS manufacturing files
+ * `eagle.epf` - Eagle preferences file
 * Data Sheets/
-	* Contain part data sheets for posterity
+ * Contain part data sheets for posterity
 * Matlab Scripts/
-	* `Battery_Analysis.m` - Estimates the battery life given certain assumptions.
-	* `BTEMS_Plotter.m` - Requests a BTEMS output .csv file from the user and plots some common plots. Very simple
+ * `Battery_Analysis.m` - Estimates the battery life given certain assumptions.
+ * `BTEMS_Plotter.m` - Requests a BTEMS output .csv file from the user and plots some common plots. Very simple
 * Radiation Shield/
-	* `Radiation_Shield_RevD.*` - The CAD files for the radiation shield. Edit the .SLDPRT file, submit the .STL file for 3D printing, and view the .pdf file. The .STL file can be easily previewed within Github.
-	* `SHT_Plug.*` - The CAD files for the plug that holds the SHT21. Edit the .SLDPRT file, submit the .STL file for 3D printing, and view the .pdf file. The .STL file can be easily previewed within Github
+ * `Radiation_Shield_RevD.*` - The CAD files for the radiation shield. Edit the .SLDPRT file, submit the .STL file for 3D printing, and view the .pdf file. The .STL file can be easily previewed within Github.
+ * `SHT_Plug.*` - The CAD files for the plug that holds the SHT21. Edit the .SLDPRT file, submit the .STL file for 3D printing, and view the .pdf file. The .STL file can be easily previewed within Github
 * `Bill of Materials.xlsx` - BTEMS bill of materials. Should be 99.9% complete. Missing any mounting hardware or insulation materials.
 
 ### Troubleshooting
 * Red Light: SD card problem. Is there an SD card? Is it working? Is it formatted? 
-	* In one instance, one of the batteries leaked, leaving residue all over the battery holder. The unit would turn on, but a new file would not be able to be created, and the red light would show. After cleaning the residue and replacing the batteries, the unit worked. It is suspected that the residue limited the amount of current available to the unit, which prevented the SD card from working properly.
+ * In one instance, one of the batteries leaked, leaving residue all over the battery holder. The unit would turn on, but a new file would not be able to be created, and the red light would show. After cleaning the residue and replacing the batteries, the unit worked. It is suspected that the residue limited the amount of current available to the unit, which prevented the SD card from working properly.
 * No Lights: Possible sensor problem. Are they plugged in? Are they good? Are they plugged in backwards?
 
 ### To-Do
@@ -48,4 +50,4 @@ To turn off, wait until the green LED blinks, then turn the switch from 'ON' to 
 6. Solder power screw terminal in place. Make sure screw terminal is straight and fits flush on the PCB!
 7. Solder Arduino in place. The programming header on the Arduino should be near on the side of the power switch. Use regular male headers, and the long side of the headers should be pointing up from the board. Make sure all the pins on the Arduino, especially the four pins in the middle of the arduino, are passed through to the PCB.
 8. Solder male headers for sensor plug ins in place
-Detail to be added...
+   Detail to be added...
